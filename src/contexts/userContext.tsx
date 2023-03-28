@@ -1,5 +1,13 @@
 import { createContext } from "react";
 
-const UserContext = createContext(null);
+type UserContextType = {
+  user: object | null;
+  setUser: (user: object | null) => void;
+}
+
+const UserContext = createContext<UserContextType>({
+  user: null,
+  setUser: () => null,
+});
 
 export default UserContext;
