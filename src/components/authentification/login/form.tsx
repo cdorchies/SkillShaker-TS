@@ -21,7 +21,7 @@ export default function LoginForm() {
         toast.success(`Vous êtes connecté ${details.username}`);
         const token = data.token;
         Cookies.set("auth_token", token, { expires: 7 });
-        navigate(`/hp`);
+        navigate(`/`);
       })
       .catch(() => {
         toast.error(`E-mail ou mot de passe incorrect...`);

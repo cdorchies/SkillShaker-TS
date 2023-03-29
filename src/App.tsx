@@ -46,9 +46,9 @@ export default function App() {
   if (typeof Storage !== "undefined") {
     if (user === undefined || user === null) {
       let infoGet = localStorage.getItem("userToken");
-      // if (infoGet !== undefined || infoGet !== null) {
-      //   // setUser(JSON.parse(infoGet));
-      // }
+      if (infoGet !== undefined && infoGet !== null) {
+        setUser(JSON.parse(infoGet));
+      }
     } else {
       localStorage.setItem("userToken", JSON.stringify(user));
     }
@@ -68,11 +68,11 @@ export default function App() {
           </div>
           <Header/>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={authToken ? <HomePage/> : <Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login/identity/forgotten-password" element={<Password />}
             />
-            <Route path="/hp" element={<HomePage />} />
+            {/* <Route path="/hp" element={<HomePage />} /> */}
           </Routes>
           <Footer />
         </Router>

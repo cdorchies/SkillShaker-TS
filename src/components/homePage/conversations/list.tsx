@@ -1,10 +1,31 @@
-import React from 'react'
+import { HiDotsVertical } from "react-icons/hi";
+import Menu from "./menuConversations";
+import axios from "axios";
+import { useState, useContext, useEffect, useRef } from "react";
 
-export default function list() {
+// CONTEXT
+import User from "../../../contexts/userContext";
+
+export default function List() {
+    // CONTEXT
+    const [openMenu, setOpenMenu] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+  
+    useEffect(() => {
+      function handleClickOutside(e: MouseEvent) {
+        if (ref.current && !ref.current.contains(e.target as Node)) {
+          setOpenMenu(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
   return (
     <>
       <h2>Conversations</h2>
-      <div className="list">
+      <div className="list" ref={ref}>
         <ul>
           <li>
             <div className="profile">
@@ -23,13 +44,13 @@ export default function list() {
                   <p className="tags-conversations">#skillshaker</p>
                   <p className="msg">Message.........</p>
                 </div>
-                {/* <div
+                <div
                   className="profileIcon"
                   onClick={() => setOpenMenu((prev) => !prev)}
                 >
                   <HiDotsVertical />
                   {openMenu && <Menu />}
-                </div> */}
+                </div>
               </div>
             </div>
           </li>
