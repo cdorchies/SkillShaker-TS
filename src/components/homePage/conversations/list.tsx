@@ -7,21 +7,22 @@ import { useState, useContext, useEffect, useRef } from "react";
 import User from "../../../contexts/userContext";
 
 export default function List() {
-    // CONTEXT
-    const [openMenu, setOpenMenu] = useState(false);
-    const ref = useRef<HTMLDivElement>(null);
-  
-    useEffect(() => {
-      function handleClickOutside(e: MouseEvent) {
-        if (ref.current && !ref.current.contains(e.target as Node)) {
-          setOpenMenu(false);
-        }
+  // CONTEXT
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpenMenu(false);
       }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+  
   return (
     <>
       <h2>Conversations</h2>

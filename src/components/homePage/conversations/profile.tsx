@@ -27,11 +27,11 @@ export default function Profile() {
       Cookies.remove("auth_token");
       localStorage.removeItem("userToken");
       localStorage.removeItem("info");
-      // localStorage.removeItem("refusedTags");
-      // localStorage.removeItem("acceptedTags");
+      localStorage.removeItem("refusedTags");
+      localStorage.removeItem("acceptedTags");
       localStorage.removeItem("infosEditProfile");
-      // localStorage.removeItem("messageFeed");
-      // localStorage.removeItem("suggestedTags");
+      localStorage.removeItem("messagesFeed");
+      localStorage.removeItem("suggestedTags");
     }
     toast.info(`Déconnexion...`);
     window.location.href = "/";

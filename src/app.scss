@@ -4,6 +4,26 @@
   src: url(../public/assets/fonts/OpenSans.ttf) format("truetype");
 }
 
+// SCROLLBAR
+
+/* Styles pour la barre de défilement */
+::-webkit-scrollbar {
+  width: 8px; /* Largeur de la barre de défilement */
+}
+
+/* Styles pour le track (fond) */
+::-webkit-scrollbar-track {
+  background: $light-mode; /* Couleur du fond */
+}
+
+/* Styles pour le thumb (poignée) */
+::-webkit-scrollbar-thumb {
+  background: $skillshaker-red-color;
+  &:hover {
+    background: $skillshaker-dark-red;
+  }
+}
+
 #App {
   position: relative;
   min-height: 100vh;
@@ -72,6 +92,9 @@
           &::placeholder {
             color: $grey;
           }
+        }
+        .message .allTagsSearchBar {
+          background-color: $dark-grey;
         }
       }
       .profileSection,
@@ -175,6 +198,9 @@
           &::placeholder {
             color: $grey;
           }
+        }
+        .message .allTagsSearchBar {
+          background-color: $grey;
         }
       }
       .profileSection,
