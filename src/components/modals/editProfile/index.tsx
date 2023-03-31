@@ -32,7 +32,6 @@ export default function ProfileForm(props : any) {
         })
         .then(async (data : void | any) => {
           setInfos(data.data);
-          console.log(data.data)
         });
     }
   }, [user, authToken]);
@@ -78,8 +77,6 @@ export default function ProfileForm(props : any) {
   const handleClick = (e: any) => {
     e.stopPropagation();
   };
-
-  console.log(infos)
     
   return (
     <div className='overlay'onClick={props.onClose}>

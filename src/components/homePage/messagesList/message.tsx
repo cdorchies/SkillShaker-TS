@@ -9,26 +9,12 @@ import User from "../../../contexts/userContext";
 export default function Message() {
   const { user } = useContext(User);
   const authToken : string | undefined = Cookies.get("auth_token");
-
-  // INPUT VALUE
-
   let [inputValue, setInputValue] = useState<string>('');
-
-  const handleSuggestionClick = (event : React.MouseEvent<HTMLParagraphElement>) => {
-    const word : string = event.currentTarget.innerText;
-    setInputValue((prev: string) => prev + word);
-  };
-
-  // SEARCH ALL TAGS
-
+  const [selectedTags, setSelectedTags] = useState<Array<any>>([]);
   const [searchTags, setSearchTags] = useState<string>('');
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value;
-    setInputValue(event.target.value);
-    setSearchTags(text);
-  };
 
-  console.log(inputValue)
+
+  const [audience, setAudience] = useState<number>(0);
 
   // API
   const [allTags, setAllTags] = useState<any>([]);
@@ -73,6 +59,26 @@ export default function Message() {
     );
   }
 
+  // INPUT VALUE
+
+  const handleSuggestionClick = (event : React.MouseEvent<HTMLParagraphElement>) => {
+    const word : string = event.currentTarget.innerText;
+    setInputValue((prev: string) => prev + word);
+    console.log(word);
+  };
+
+  // SEARCH ALL TAGS
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.target.value;
+    setInputValue(event.target.value);
+    setSearchTags(text);
+  };
+
+  // AUDIENCE CALCUL
+
+  console.log(audience);
+
   return (
     <>
       <div className="msg">
@@ -99,8 +105,10 @@ export default function Message() {
           ) : error}
           </div>
         </div>
-
         <MdSend />
+      </div>
+      <div className="audience-bloc">
+        Audience potentiel total : {audience}
       </div>
     </>
   );
