@@ -12,17 +12,12 @@ export default function Message() {
 
   // INPUT VALUE
 
-  const [inputValue, setInputValue] = useState<string>('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  let [inputValue, setInputValue] = useState<string>('');
 
   const handleSuggestionClick = (event : React.MouseEvent<HTMLParagraphElement>) => {
-    const word = event.currentTarget.innerText;
-    setSelectedTags([...selectedTags, word]);
-    console.log(word)
+    const word : string = event.currentTarget.innerText;
+    setInputValue((prev: string) => prev + word);
   };
-
-  // value={inputValue + selectedTags}
-
 
   // SEARCH ALL TAGS
 
@@ -33,13 +28,7 @@ export default function Message() {
     setSearchTags(text);
   };
 
-  console.log(inputValue + selectedTags)
-
-
-  // const handleTagsClick = (event: React.MouseEvent<HTMLInputElement>) => {
-  //   const word = event.currentTarget.innerText;
-  //   setInputValue([...inputValue, word]);
-  // }
+  console.log(inputValue)
 
   // API
   const [allTags, setAllTags] = useState<any>([]);
@@ -94,7 +83,8 @@ export default function Message() {
             id="SkillShaker-Send-Message"
             placeholder="Rédiger un message..."
             onChange={handleSearchChange}
-            value={inputValue + selectedTags}
+            value={inputValue}
+            
           />{" "}
           <div className={searchTags.includes('#') ? "allTagsSearchBar active" : "allTagsSearchBar"}>
           {allTags && searchTags.includes('#') ? (
