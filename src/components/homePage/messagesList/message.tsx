@@ -10,20 +10,36 @@ export default function Message() {
   const { user } = useContext(User);
   const authToken : string | undefined = Cookies.get("auth_token");
 
-  const [inputValue, setInputValue] = useState<Array<any>>([]);
-  const [searchTags, setSearchTags] = useState<string>('');
+  // INPUT VALUE
 
+  const [inputValue, setInputValue] = useState<string>('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleSuggestionClick = (event : React.MouseEvent<HTMLParagraphElement>) => {
+    const word = event.currentTarget.innerText;
+    setSelectedTags([...selectedTags, word]);
+    console.log(word)
+  };
+
+  // value={inputValue + selectedTags}
+
+
+  // SEARCH ALL TAGS
+
+  const [searchTags, setSearchTags] = useState<string>('');
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = event.target.value;
+    setInputValue(event.target.value);
     setSearchTags(text);
   };
 
-  const handleTagsClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    const word = event.currentTarget.innerText;
-    setInputValue([...inputValue, word]);
-  }
+  console.log(inputValue + selectedTags)
 
-  console.log(inputValue)
+
+  // const handleTagsClick = (event: React.MouseEvent<HTMLInputElement>) => {
+  //   const word = event.currentTarget.innerText;
+  //   setInputValue([...inputValue, word]);
+  // }
 
   // API
   const [allTags, setAllTags] = useState<any>([]);
@@ -78,15 +94,15 @@ export default function Message() {
             id="SkillShaker-Send-Message"
             placeholder="Rédiger un message..."
             onChange={handleSearchChange}
-            // value={inputValue}
+            value={inputValue + selectedTags}
           />{" "}
-          <div className={searchTags ? "allTagsSearchBar active" : "allTagsSearchBar"}>
+          <div className={searchTags.includes('#') ? "allTagsSearchBar active" : "allTagsSearchBar"}>
           {allTags && searchTags.includes('#') ? (
             allTags.map((tag : any) => {
               return (
-                <div>
-                  <p key={tag.id} onClick={handleTagsClick}><span className="tagName">{tag.name}</span></p>
-                  <p key={tag.id}><span className="audience">{tag.audience}</span></p>
+                <div key={tag.id}>
+                  <p onClick={handleSuggestionClick}><span className="tagName">{tag.name}</span></p>
+                  <p><span className="audience">{tag.audience}</span></p>
                 </div>
               )
             })
