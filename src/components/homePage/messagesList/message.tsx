@@ -9,13 +9,21 @@ import User from "../../../contexts/userContext";
 export default function Message() {
   const { user } = useContext(User);
   const authToken : string | undefined = Cookies.get("auth_token");
-  
+
+  const [inputValue, setInputValue] = useState<Array<any>>([]);
   const [searchTags, setSearchTags] = useState<string>('');
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = event.target.value;
     setSearchTags(text);
   };
 
+  const handleTagsClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    const word = event.currentTarget.innerText;
+    setInputValue([...inputValue, word]);
+  }
+
+  console.log(inputValue)
 
   // API
   const [allTags, setAllTags] = useState<any>([]);
@@ -70,14 +78,16 @@ export default function Message() {
             id="SkillShaker-Send-Message"
             placeholder="Rédiger un message..."
             onChange={handleSearchChange}
+            // value={inputValue}
           />{" "}
           <div className={searchTags ? "allTagsSearchBar active" : "allTagsSearchBar"}>
           {allTags && searchTags.includes('#') ? (
             allTags.map((tag : any) => {
               return (
-                <>
-                <p key={tag.id}>{tag.name} {tag.audience}</p>
-                </>
+                <div>
+                  <p key={tag.id} onClick={handleTagsClick}><span className="tagName">{tag.name}</span></p>
+                  <p key={tag.id}><span className="audience">{tag.audience}</span></p>
+                </div>
               )
             })
           ) : error}

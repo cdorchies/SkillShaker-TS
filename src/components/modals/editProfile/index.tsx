@@ -30,8 +30,9 @@ export default function ProfileForm(props : any) {
         .catch(() => {
           setError("Une erreur est survenue...");
         })
-        .then(async (data) => {
-          setInfos(data);
+        .then(async (data : void | any) => {
+          setInfos(data.data);
+          console.log(data.data)
         });
     }
   }, [user, authToken]);
@@ -45,7 +46,7 @@ export default function ProfileForm(props : any) {
           Authorization: "Bearer " + authToken,
         },
       })
-      .then(async (data) => {
+      .then(async (data : void | any) => {
         setInfos(data);
         toast.success(
           `${infos.firstname}, vos modifications ont bien été prises en compte !`
@@ -74,11 +75,11 @@ export default function ProfileForm(props : any) {
     console.log("Erreur....");
   }
 
-  console.log(infos)
-
   const handleClick = (e: any) => {
     e.stopPropagation();
   };
+
+  console.log(infos)
     
   return (
     <div className='overlay'onClick={props.onClose}>
@@ -96,7 +97,7 @@ export default function ProfileForm(props : any) {
                 className="edit-input"
                 type="text"
                 name="firstname"
-                // value={infos.data.firstname}
+                value={infos ? infos.firstname : ""}
                 onChange={(e) =>
                   setInfos({ ...infos, firstname: e.target.value })
                 }
@@ -111,7 +112,7 @@ export default function ProfileForm(props : any) {
                 className="edit-input"
                 type="text"
                 name="phoneNumber"
-                // value={infos.data.phoneNumber}
+                value={infos ? infos.phoneNumber : ""}
                 onChange={(e) =>
                   setInfos({ ...infos, phoneNumber: e.target.value })
                 }
@@ -127,7 +128,7 @@ export default function ProfileForm(props : any) {
                 name="description"
                 cols={30}
                 rows={10}
-                // value={infos.data.description}
+                value={infos ? infos.description : ""}
                 onChange={(e) =>
                   setInfos({ ...infos, description: e.target.value })
                 }
