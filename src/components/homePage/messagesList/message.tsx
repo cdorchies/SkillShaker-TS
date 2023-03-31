@@ -10,11 +10,9 @@ export default function Message() {
   const { user } = useContext(User);
   const authToken : string | undefined = Cookies.get("auth_token");
   let [inputValue, setInputValue] = useState<string>('');
-  const [selectedTags, setSelectedTags] = useState<Array<any>>([]);
-  const [searchTags, setSearchTags] = useState<string>('');
-
-
-  const [audience, setAudience] = useState<number>(0);
+  // const [searchTags, setSearchTags] = useState<string>('');
+  const [audience, setAudience] = useState<number[]>([]);
+  // const [className, setClassName] = useState<string>('allTagsSearchBar');
 
   // API
   const [allTags, setAllTags] = useState<any>([]);
@@ -62,22 +60,28 @@ export default function Message() {
   // INPUT VALUE
 
   const handleSuggestionClick = (event : React.MouseEvent<HTMLParagraphElement>) => {
-    const word : string = event.currentTarget.innerText;
-    setInputValue((prev: string) => prev + word);
-    console.log(word);
+    // TAG
+    let word : any = event.currentTarget.innerText;
+    word = word.split('\n\n');
+    setInputValue((prev: string) => prev + word[0]);
+
+    // AUDIENCE
+    let audienceNumber = parseInt(word[1]);
+    setAudience([...audience, audienceNumber]);
   };
 
   // SEARCH ALL TAGS
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value;
     setInputValue(event.target.value);
-    setSearchTags(text);
   };
 
   // AUDIENCE CALCUL
 
-  console.log(audience);
+  let audienceCalcul : number = audience.reduce((acc, number) => acc + number, 0);
+
+  // MOTS - HASHTAGS MIS EN VALEUR
+  console.log(inputValue)
 
   return (
     <>
@@ -92,12 +96,12 @@ export default function Message() {
             value={inputValue}
             
           />{" "}
-          <div className={searchTags.includes('#') ? "allTagsSearchBar active" : "allTagsSearchBar"}>
-          {allTags && searchTags.includes('#') ? (
+          <div className={inputValue.endsWith('#') ? "allTagsSearchBar active" : "allTagsSearchBar"}>
+          {allTags && inputValue.endsWith('#') ? (
             allTags.map((tag : any) => {
               return (
-                <div key={tag.id}>
-                  <p onClick={handleSuggestionClick}><span className="tagName">{tag.name}</span></p>
+                <div onClick={handleSuggestionClick} key={tag.id}>
+                  <p><span className="tagName">{tag.name}</span></p>
                   <p><span className="audience">{tag.audience}</span></p>
                 </div>
               )
@@ -108,7 +112,7 @@ export default function Message() {
         <MdSend />
       </div>
       <div className="audience-bloc">
-        Audience potentiel total : {audience}
+        Audience potentiel total : {audience.length > 0 ? audienceCalcul : 0}
       </div>
     </>
   );
