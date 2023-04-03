@@ -8,7 +8,6 @@ import { useContext } from "react";
 import "./index.scss";
 
 export default function HomePage() {
-  const { user } = useContext(User);
   const authToken = Cookies.get("auth_token");
 
   return (

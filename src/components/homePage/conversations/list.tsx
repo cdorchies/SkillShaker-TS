@@ -1,10 +1,6 @@
 import { HiDotsVertical } from "react-icons/hi";
 import Menu from "./menuConversations";
-import axios from "axios";
-import { useState, useContext, useEffect, useRef } from "react";
-
-// CONTEXT
-import User from "../../../contexts/userContext";
+import { useState, useEffect, useRef } from "react";
 
 export default function List() {
   // CONTEXT
@@ -33,7 +29,7 @@ export default function List() {
               <div className="picture">
                 <img
                   src="https://picsum.photos/50/50"
-                  alt="Photo de profil"
+                  alt=""
                   className="profilePicture"
                 />
               </div>

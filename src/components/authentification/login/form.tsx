@@ -9,7 +9,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [details, setDetails] = useState({ username: '', password: ''});
-  const { user, setUser } = useContext(User);
+  const { setUser } = useContext(User);
   const [error, setError] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
